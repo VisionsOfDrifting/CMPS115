@@ -7,13 +7,13 @@ html {
 }
 
 body {
-  background: #ffffff; /* #c1bdba */
+  background: black; /* #c1bdba */
   font-family: 'Titillium Web', sans-serif;
 }
 
 a {
   text-decoration: none;
-  color: #1ab188;
+  color: #c6baba;
   -webkit-transition: .5s ease;
   transition: .5s ease;
 }
@@ -22,11 +22,11 @@ a:hover {
 }
 
 .form {
-  background: rgba(19, 35, 47, 0.9); 
-  padding: 40px;
-  max-width: 600px;
+  background: #efeae4;  
+  padding: 100px;
+  max-width: 900px;
   margin: 40px auto;
-  border-radius: 4px;
+  border-radius: 10px;
   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
 }
 
@@ -43,7 +43,7 @@ a:hover {
 .tab-group li a {
   display: block;
   text-decoration: none;
-  padding: 15px;
+  padding: 5px;
   background: rgba(160, 179, 176, 0.25);
   color: #a0b3b0;
   font-size: 20px;
@@ -55,12 +55,12 @@ a:hover {
   transition: .5s ease;
 }
 .tab-group li a:hover {
-  background: #179b77;
-  color: #ffffff;
+  background: #c6baba;
+  color: black;
 }
 .tab-group .active a {
-  background: #1ab188;
-  color: #ffffff;
+  background: #c6baba;
+  color: black;
 }
 
 .tab-content > div:last-child {
@@ -69,26 +69,26 @@ a:hover {
 
 h1 {
   text-align: center;
-  color: #ffffff;
+  color: black;
   font-weight: 300;
   margin: 0 0 40px;
 }
 
 h2 {
     text-align: center;
-    color: #1ab188;
+    color: #c6baba;
     font-weight: 1000;
     margin: 0;
 }
 
 span {
-    color: #1ab188;
+    color: #c6baba;
     font-weight: bold;
 }
 
 p {
     text-align: center;
-    color: #ffffff;
+    color: black;
     margin: 0px 0px 50px 0px;
 }
 
@@ -108,7 +108,7 @@ label {
   -webkit-transform: translateY(6px);
           transform: translateY(6px);
   left: 13px;
-  color: rgba(255, 255, 255, 0.5);
+  color: #c6baba;
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
@@ -117,7 +117,7 @@ label {
 }
 label .req {
   margin: 2px;
-  color: #1ab188;
+  color: #c6baba;
 }
 
 label.active {
@@ -131,7 +131,7 @@ label.active .req {
 }
 
 label.highlight {
-  color: #ffffff;
+  color: black;
 }
 
 input, textarea {
@@ -143,14 +143,14 @@ input, textarea {
   background: none;
   background-image: none;
   border: 1px solid #a0b3b0;
-  color: #ffffff;
+  color: black;
   border-radius: 0;
   -webkit-transition: border-color .25s ease, box-shadow .25s ease;
   transition: border-color .25s ease, box-shadow .25s ease;
 }
 input:focus, textarea:focus {
   outline: 0;
-  border-color: #1ab188;
+  border-color: #c6baba;
 }
 
 textarea {
@@ -161,6 +161,7 @@ textarea {
 .field-wrap {
   position: relative;
   margin-bottom: 40px;
+  
 }
 
 .top-row:after {
@@ -186,14 +187,14 @@ textarea {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .1em;
-  background: #1ab188;
-  color: #ffffff;
+  background:  #c6baba;
+  color: black;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
   -webkit-appearance: none;
 }
 .button:hover, .button:focus {
-  background: #179b77;
+  background: white;
 }
 
 .button-block {
