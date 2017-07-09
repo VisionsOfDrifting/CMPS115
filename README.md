@@ -1,2 +1,3 @@
 # CMPS115
-CSS WebApplet
+Budget Calculator WebApplet
+Implemented with HTML, CSS, PHP, and SQL
