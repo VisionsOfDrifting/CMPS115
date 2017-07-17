@@ -20,7 +20,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     <a href="description.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Description of the Project</a>
     <a href="teamProj.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Team Project</a>
     <a href="contact.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Contact</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Clients</a>
    
   </div>
 </div>
@@ -35,6 +34,8 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   <a class="w3-bar-item w3-button w3-hover-black" href="profile.php">Profile</a>
   <a class="w3-bar-item w3-button w3-hover-black" href="updateBudget.php">Update Budget</a>
   <a class="w3-bar-item w3-button w3-hover-black" href="printTable.php">Print your Budget</a> 
+      <a class="w3-bar-item w3-button w3-hover-black" href="datePrint.php">Print between Dates</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="printGraph.php" >Graph your Budget</a>
   <a class="w3-bar-item w3-button w3-hover-black" href="insertTransaction.php">Insert New Transaction</a>
    <a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Logout</a>
 </nav>
@@ -48,11 +49,12 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
       <h1 class="w3-text-teal">Description of the Product</h1>
-      <p>BudgetTrace is the go to website for anyone who likes to keep track of their money. 
-      With BudgetTrace, you will see where your money comes and where it goes. You can see how much you spend on 
-      food, gas and all the above on a daily/weekly/monthly/yearly time frame. 
-      BudgetTrace has all you need and more so come and sign up today!!</p>
-      <a href="https://github.com/VisionsOfDrifting/CMPS115">GitHub</a>
+        <p>BudgetTrace is the go to website for anyone who likes to keep track of their money.</p>
+        <p>With BudgetTrace, you will see where your money comes and where it goes. You can see how much you spend on 
+          food, gas and everything else on a daily/weekly/monthly/yearly time frame.</p> 
+      <p>BudgetTrace has all you need and more so come and sign up today!!</p>
+       <div id="spacer" style="width:800px;height:20px;"></div>
+      <a href="https://github.com/VisionsOfDrifting/CMPS115">The Budget Trace Github Page</a>
     </div>
     <div class="w3-third w3-container">
       <h2><center>Join Today!</center></h2>
