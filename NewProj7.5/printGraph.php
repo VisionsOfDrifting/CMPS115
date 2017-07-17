@@ -96,17 +96,16 @@ try {
     $stmt2 = $conn->prepare("SELECT tr_type FROM budget WHERE name = '$temp'"); 
     $stmt2->execute();
     $result2 = $stmt2->fetch(PDO::FETCH_ASSOC);
-    $json_tr_types = json_encode($result2);
     $result_array2 = Array();
     foreach(new RecursiveArrayIterator(new RecursiveArrayIterator($stmt2->fetchAll())) as $k=>$v) { 
         $result_array2[] = $v;
     }
     //convert the PHP array into JSON format, so it works with javascript  , , 
     $json_tr_types = json_encode($result_array2);
+    
     $stmt3 = $conn->prepare("SELECT tr_cost FROM budget WHERE name = '$temp'"); 
     $stmt3->execute();
     $result3 = $stmt3->fetch(PDO::FETCH_ASSOC);
-    $json_tr_costs = json_encode($result3);
     $result_array3 = Array();
     foreach(new RecursiveArrayIterator(new RecursiveArrayIterator($stmt3->fetchAll())) as $k=>$v) { 
         $result_array3[] = $v;
@@ -116,13 +115,21 @@ try {
     $stmt4 = $conn->prepare("SELECT date FROM budget WHERE name = '$temp'"); 
     $stmt4->execute();
     $result4 = $stmt4->fetch(PDO::FETCH_ASSOC);
-    $json_dates = json_encode($result4);
     $result_array4 = Array();
     foreach(new RecursiveArrayIterator(new RecursiveArrayIterator($stmt4->fetchAll())) as $k=>$v) { 
         $result_array4[] = $v;
     }
     //convert the PHP array into JSON format, so it works with javascript  , , 
     $json_dates = json_encode($result_array4);
+    
+    $stmt5 = $conn->prepare("SELECT total FROM budget WHERE name = '$temp'"); 
+    $stmt5->execute();
+    $result5 = $stmt5->fetch(PDO::FETCH_ASSOC);
+    $result_array5 = Array();
+    foreach(new RecursiveArrayIterator(new RecursiveArrayIterator($stmt5->fetchAll())) as $k=>$v) { 
+        $result_array5[] = $v;
+    }
+    $json_total = json_encode($result_array5);
       
 }
 catch(PDOException $e) {
@@ -149,6 +156,8 @@ $conn = null;
       <div id="spacer2" style="width:600px;height:250px;"></div>
       <p>Date vs Cost (Scatter)</p>
       <div id="tester3" style="width:1100px;height:450px;"></div>
+      <p>Transactions vs Budget (Scatter)</p>
+      <div id="tester4" style="width:1100px;height:450px;"></div>
       
 <script>
     //now put it into the javascript
@@ -156,6 +165,7 @@ $conn = null;
     var tr_types = <?php echo json_encode($json_tr_types); ?>;
     var tr_costs = <?php echo json_encode($json_tr_costs); ?>;   
     var tr_dates = <?php echo json_encode($json_dates); ?>;
+    var tr_total = <?php echo json_encode($json_total); ?>;
     //eyyyyyyy!!!!!
     //sort of...
     //str = JSON.stringify(tr_names, null, 4); 
@@ -181,7 +191,7 @@ $conn = null;
     for (var i = 1; i < res.length; i++) {
        Re[i-1] = re[i];}
     //document.writeln(typeof re);
-    //document.writeln(re);
+   // document.writeln(Re);
     //hot damn
     //document.getElementById("demo").innerHTML = re;
     
@@ -191,6 +201,7 @@ $conn = null;
     for (var i = 1; i < res2.length; i++) {
        re2[i-1] = res2[i].substring(0,res2[i].indexOf("\""));}
     //document.getElementById("demo2").innerHTML = re2;
+    //document.writeln(re2);
     
     var resl3 = tr_costs.substring(1,tr_costs.length-1);
     var res3 = resl3.split("{\"tr_cost\":\"");
@@ -198,6 +209,7 @@ $conn = null;
     for (var i = 1; i < res3.length; i++) {
        re3[i-1] = res3[i].substring(0,res3[i].indexOf("\""));}
     //document.getElementById("demo3").innerHTML = re3;
+    // document.writeln(re3);
     
     var resl4 = tr_dates.substring(1,tr_dates.length-1);
     //document.writeln(typeof resl4);
@@ -211,6 +223,15 @@ $conn = null;
         var temp = res4[i].substring(0,res4[i].indexOf("\""));
         re4[i-1] = temp.replace(/\\\//g, "-")
     }
+     //document.writeln(re4);
+    
+    var resl5 = tr_total.substring(1,tr_total.length-1);
+    var res5 = resl5.split("{\"total\":\"");
+    var re5 = [];
+    for (var i = 1; i < res5.length; i++) {
+       re5[i-1] = res5[i].substring(0,res5[i].indexOf("\""));}
+    //document.getElementById("demo3").innerHTML = re5;
+    // document.writeln(re5);
     //document.writeln(typeof re4);
     //document.writeln(re4);
     //document.getElementById("demo4").innerHTML = re4;
@@ -242,12 +263,36 @@ $conn = null;
     mode: 'markers'}], { 
     margin: { t: 0 } } );
     
+    var transNum = [];
+    for (var i = 0; i < Re.length; i++) {
+        transNum[i] = i+1;
+        }
+    //document.writeln(transNum);
+    TESTER4 = document.getElementById('tester4');
+    Plotly.plot( TESTER4, [{
+    x: transNum,
+    y: re3,
+    text: Re,
+    name: "Transactions",
+    fill: 'tozeroy',
+    type: 'scatter',
+    mode: 'markers'},{
+    x: transNum,
+    y: re5,
+    name: "Budget",
+    fill: 'tozeroy',
+    type: 'scatter',
+    mode: 'none'}], { 
+    yaxis: {title: 'Dollar Ammount'},
+    xaxis: {title: 'Transaction Number'},
+    margin: { t: 0 } } );
+    
    /*  var trace = function(re4,re3,kitty,re) {
         x: re4,
         y: re3,
         name: re.concat(kitty),
         type: 'bar'
-    };*/
+    };
     //var Ntr = [];
     var cost_Type = [];
     var coutner = 0;
@@ -264,7 +309,7 @@ $conn = null;
         var kitty = " "+re2[i];
       //  Ntr.push(new trace(re4,re3,kitty,re));
     }
-    document.write(cost_Type);
+    document.write(cost_Type);*/
     /*var data = Ntr;
     var layout = {
     xaxis: {title: 'X axis'},
