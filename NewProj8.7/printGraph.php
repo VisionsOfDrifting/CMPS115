@@ -37,7 +37,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 <div class="w3-top">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-    <a href="WebContent.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">BudgetTrace</a>
+    <a href="#" class="w3-bar-item w3-button w3-theme-l1"><img src="pics/TeamLogo.png" alt="Mountain View" style="width:60px;height:35px;"></a>
     <a href="description.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Description of the Project</a>
     <a href="teamProj.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Team Project</a>
     <a href="contact.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Contact</a>
@@ -59,8 +59,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   <a class="w3-bar-item w3-button w3-hover-black" href="printCategory.php">Print by Category</a>
   <a class="w3-bar-item w3-button w3-hover-black" href="printGraph.php" >Graph your Budget</a>
   <a class="w3-bar-item w3-button w3-hover-black" href="insertTransaction.php">Insert New Transaction</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="deleteTrans.php">Delete Transaction</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Logout</a>
+   <a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Logout</a>
 </nav>
 
 <!-- Overlay effect when opening sidebar on small screens -->
