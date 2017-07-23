@@ -80,7 +80,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   <div class="w3-twothird w3-container">
 	  
       <title>This is your Budget Table</title>
-	  <?php include 'css/css.html'; ?>
 	  
 	 
 	  <div class="form">

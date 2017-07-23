@@ -37,7 +37,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 <div class="w3-top">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-    <a href="#" class="w3-bar-item w3-button w3-theme-l1"><img src="pics/TeamLogo.png" alt="Mountain View" style="width:60px;height:35px;"></a>
+    <a href="#" class="w3-bar-item w3-button w3-theme-l1">Logo</a>
     <a href="description.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Description of the Project</a>
     <a href="teamProj.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Team Project</a>
     <a href="contact.php" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Contact</a>
@@ -55,8 +55,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   <a class="w3-bar-item w3-button w3-hover-black" href="profile.php">Profile</a>
   <a class="w3-bar-item w3-button w3-hover-black" href="updateBudget.php">Update Budget</a>
   <a class="w3-bar-item w3-button w3-hover-black" href="printTable.php">Print your Budget</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="datePrint.php">Print by Date</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="printCategory.php">Print by Category</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="datePrint.php">Print between Dates</a>
   <a class="w3-bar-item w3-button w3-hover-black" href="printGraph.php" >Graph your Budget</a>
   <a class="w3-bar-item w3-button w3-hover-black" href="insertTransaction.php">Insert New Transaction</a>
    <a class="w3-bar-item w3-button w3-hover-black" href="logout.php">Logout</a>
@@ -97,17 +96,16 @@ try {
     $stmt2 = $conn->prepare("SELECT tr_type FROM budget WHERE name = '$temp'"); 
     $stmt2->execute();
     $result2 = $stmt2->fetch(PDO::FETCH_ASSOC);
-    $json_tr_types = json_encode($result2);
     $result_array2 = Array();
     foreach(new RecursiveArrayIterator(new RecursiveArrayIterator($stmt2->fetchAll())) as $k=>$v) { 
         $result_array2[] = $v;
     }
     //convert the PHP array into JSON format, so it works with javascript  , , 
     $json_tr_types = json_encode($result_array2);
+    
     $stmt3 = $conn->prepare("SELECT tr_cost FROM budget WHERE name = '$temp'"); 
     $stmt3->execute();
     $result3 = $stmt3->fetch(PDO::FETCH_ASSOC);
-    $json_tr_costs = json_encode($result3);
     $result_array3 = Array();
     foreach(new RecursiveArrayIterator(new RecursiveArrayIterator($stmt3->fetchAll())) as $k=>$v) { 
         $result_array3[] = $v;
@@ -117,13 +115,21 @@ try {
     $stmt4 = $conn->prepare("SELECT date FROM budget WHERE name = '$temp'"); 
     $stmt4->execute();
     $result4 = $stmt4->fetch(PDO::FETCH_ASSOC);
-    $json_dates = json_encode($result4);
     $result_array4 = Array();
     foreach(new RecursiveArrayIterator(new RecursiveArrayIterator($stmt4->fetchAll())) as $k=>$v) { 
         $result_array4[] = $v;
     }
     //convert the PHP array into JSON format, so it works with javascript  , , 
     $json_dates = json_encode($result_array4);
+    
+    $stmt5 = $conn->prepare("SELECT total FROM budget WHERE name = '$temp'"); 
+    $stmt5->execute();
+    $result5 = $stmt5->fetch(PDO::FETCH_ASSOC);
+    $result_array5 = Array();
+    foreach(new RecursiveArrayIterator(new RecursiveArrayIterator($stmt5->fetchAll())) as $k=>$v) { 
+        $result_array5[] = $v;
+    }
+    $json_total = json_encode($result_array5);
       
 }
 catch(PDOException $e) {
@@ -150,13 +156,19 @@ $conn = null;
       <div id="spacer2" style="width:600px;height:250px;"></div>
       <p>Date vs Cost (Scatter)</p>
       <div id="tester3" style="width:1100px;height:450px;"></div>
-      
+      <p>Transactions vs Budget (Scatter)</p>
+      <div id="tester4" style="width:1100px;height:450px;"></div>
+      <p id="demo5"></p>
+      <p id="demo6"></p>
+      <p id="demo7"></p>
+          
 <script>
     //now put it into the javascript
     var tr_names = <?php echo json_encode($json_tr_names); ?>;
     var tr_types = <?php echo json_encode($json_tr_types); ?>;
     var tr_costs = <?php echo json_encode($json_tr_costs); ?>;   
     var tr_dates = <?php echo json_encode($json_dates); ?>;
+    var tr_total = <?php echo json_encode($json_total); ?>;
     //eyyyyyyy!!!!!
     //sort of...
     //str = JSON.stringify(tr_names, null, 4); 
@@ -182,7 +194,7 @@ $conn = null;
     for (var i = 1; i < res.length; i++) {
        Re[i-1] = re[i];}
     //document.writeln(typeof re);
-    //document.writeln(re);
+   // document.writeln(Re);
     //hot damn
     //document.getElementById("demo").innerHTML = re;
     
@@ -193,12 +205,18 @@ $conn = null;
        re2[i-1] = res2[i].substring(0,res2[i].indexOf("\""));}
     //document.getElementById("demo2").innerHTML = re2;
     
+    
     var resl3 = tr_costs.substring(1,tr_costs.length-1);
+    document.getElementById("demo5").innerHTML = resl3;
     var res3 = resl3.split("{\"tr_cost\":\"");
+    document.getElementById("demo6").innerHTML = res3;
     var re3 = [];
     for (var i = 1; i < res3.length; i++) {
-       re3[i-1] = res3[i].substring(0,res3[i].indexOf("\""));}
-    //document.getElementById("demo3").innerHTML = re3;
+        if(res3[i].substring(0,1) == "-"){ 
+            re3[i-1] = res3[i].substring(1,res3[i].indexOf("\""));
+        }else{
+            re3[i-1] = res3[i].substring(0,res3[i].indexOf("\""));}}
+    document.getElementById("demo7").innerHTML = re3;
     
     var resl4 = tr_dates.substring(1,tr_dates.length-1);
     //document.writeln(typeof resl4);
@@ -212,11 +230,47 @@ $conn = null;
         var temp = res4[i].substring(0,res4[i].indexOf("\""));
         re4[i-1] = temp.replace(/\\\//g, "-")
     }
+     //document.writeln(re4);
+    
+    var resl5 = tr_total.substring(1,tr_total.length-1);
+    var res5 = resl5.split("{\"total\":\"");
+    var re5 = [];
+    for (var i = 1; i < res5.length; i++) {
+       re5[i-1] = res5[i].substring(0,res5[i].indexOf("\""));}
+    //document.getElementById("demo3").innerHTML = re5;
+    // document.writeln(re5);
     //document.writeln(typeof re4);
     //document.writeln(re4);
     //document.getElementById("demo4").innerHTML = re4;
     //some magic with js libs
-
+    
+    //var Ntr = [];
+    var cost_Type = [];
+    var sum_Type= [];
+    //var sum_Date= [];
+    var coutner = 0;
+    cost_Type.push(re2[0]);
+    sum_Type[0] = Number(re3[0]);
+    loop1:
+    for (var i = 1; i < re4.length; i++) {
+        /* if (re4[i-1] == re4[i]){
+            counter++;
+            //sum_Date[]
+            } */
+        loop2:
+        for (var j = 0; j < cost_Type.length; j++) {
+            if(re2[i] == cost_Type[j]){
+                sum_Type[j] += Number(re3[i]);
+                continue loop1;
+            }else if((j+1) == cost_Type.length){ 
+                cost_Type.push(re2[i]);
+                sum_Type.push(Number(re3[i]));
+            }
+         }
+    }
+    //document.write(cost_Type);
+    //document.write(sum_Type);
+    
     //and we have a line graph
     TESTER = document.getElementById('tester');
     Plotly.plot( TESTER, [{
@@ -224,12 +278,13 @@ $conn = null;
     y: re3,
     text: Re,
     type: 'bar'}], {
+    barmode: 'relative',
     margin: { t: 0 } } );
     
     TESTER2 = document.getElementById('tester2');
     Plotly.plot( TESTER2, [{
-    values: re3,
-    labels: re2,
+    values: sum_Type,
+    labels: cost_Type,
     type: 'pie'}], {
     height: 400,
     width: 500
@@ -243,30 +298,39 @@ $conn = null;
     mode: 'markers'}], { 
     margin: { t: 0 } } );
     
-   /*  var trace = function(re4,re3,kitty,re) {
-        x: re4,
-        y: re3,
-        name: re.concat(kitty),
+    var transNum = [];
+    for (var i = 0; i < Re.length; i++) {
+        transNum[i] = i+1;
+        }
+    //document.writeln(transNum);
+    TESTER4 = document.getElementById('tester4');
+    Plotly.plot( TESTER4, [{
+    x: transNum,
+    y: re3,
+    text: Re,
+    name: "Transactions",
+    fill: 'tozeroy',
+    type: 'scatter',
+    mode: 'markers'},{
+    x: transNum,
+    y: re5,
+    name: "Budget",
+    fill: 'tozeroy',
+    type: 'scatter',
+    mode: 'none'}], { 
+    yaxis: {title: 'Dollar Ammount'},
+    xaxis: {title: 'Transaction Number'},
+    margin: { t: 0 } } );
+    
+   /*  var Trace = function(Dates,Total_onDate,Type) {
+        x: Dates,
+        y: Total_onDate,
+        name: Type,
         type: 'bar'
     };*/
-    //var Ntr = [];
-    var cost_Type = [];
-    var coutner = 0;
-    for (var i = 1; i < re4.length; i++) {
-        if (re4[i-1] == re4[i]){
-            counter++;}
-        if(cost_Type.length != 0){
-            for (var j = 0; j < cost_Type.length; j++) {
-                if(re2[i] != cost_Type[j]){
-                    cost_Type.push(re2[i]);
-                }
-            }
-        }else{ cost_Type.push(re2[i]); }
-        var kitty = " "+re2[i];
-      //  Ntr.push(new trace(re4,re3,kitty,re));
-    }
-    document.write(cost_Type);
-    /*var data = Ntr;
+    /*var Ntr = [];
+    
+    
     var layout = {
     xaxis: {title: 'X axis'},
     yaxis: {title: 'Y axis'},
@@ -275,7 +339,7 @@ $conn = null;
     };
     Plotly.plot('myDiv', data, layout);*/
     
-    //var trace = [{ x: re4, y:re3, mode: 'markers'}];
+    //var trace = new Trace(re4,re3, );
    // var layout = { margin: { t: 0 } };
    // Ploty.plot(TESTER3, data, layout);
 </script>
