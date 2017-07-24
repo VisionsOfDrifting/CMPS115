@@ -242,21 +242,14 @@ $conn = null;
     //document.writeln(typeof re4);
     //document.writeln(re4);
     //document.getElementById("demo4").innerHTML = re4;
-    //some magic with js libs
     
-    //var Ntr = [];
+    
     var cost_Type = [];
     var sum_Type= [];
-    //var sum_Date= [];
-    var coutner = 0;
     cost_Type.push(re2[0]);
-    sum_Type[0] = Number(re3[0]);
+    sum_Type[0] = Number(0);
     loop1:
-    for (var i = 1; i < re4.length; i++) {
-        /* if (re4[i-1] == re4[i]){
-            counter++;
-            //sum_Date[]
-            } */
+    for (var i = 0; i < re2.length; i++) {
         loop2:
         for (var j = 0; j < cost_Type.length; j++) {
             if(re2[i] == cost_Type[j]){
@@ -264,14 +257,15 @@ $conn = null;
                 continue loop1;
             }else if((j+1) == cost_Type.length){ 
                 cost_Type.push(re2[i]);
-                sum_Type.push(Number(re3[i]));
+                sum_Type.push(Number(0));
             }
          }
     }
     //document.write(cost_Type);
     //document.write(sum_Type);
     
-    //and we have a line graph
+    //some magic with js libs
+    //and we have graphs
     TESTER = document.getElementById('tester');
     Plotly.plot( TESTER, [{
     x: re4,
