@@ -101,11 +101,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
     <script src="js/index.js"></script>
-
-  
-
-
-<!-- END MAIN -->
 </div>
 
 <script>
@@ -135,3 +130,4 @@ function w3_close() {
 
 </body>
 </html>
+   
