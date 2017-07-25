@@ -5,13 +5,17 @@
 $email = $mysqli->escape_string($_POST['email']);
 $result = $mysqli->query("SELECT * FROM users WHERE email='$email'");
 
+
+
 if ( $result->num_rows == 0 ){ // User doesn't exist
     $_SESSION['message'] = "User with that email doesn't exist!";
     header("location: error.php");
 }
 else { // User exists
     $user = $result->fetch_assoc();
-
+    $sql = "UPDATE users SET active = 1 WHERE email='$email'";
+    $mysqli->query($sql);
+   
     if ( password_verify($_POST['password'], $user['password']) ) {
         
         $_SESSION['email'] = $user['email'];
@@ -19,8 +23,6 @@ else { // User exists
         $_SESSION['last_name'] = $user['last_name'];
         $_SESSION['active'] = $user['active'];
         
-        // This is how we'll know the user is logged in
-        $_SESSION['logged_in'] = true;
 
         header("location: profile.php");
     }
@@ -30,3 +32,4 @@ else { // User exists
     }
 }
 
+?>
